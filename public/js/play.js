@@ -27,7 +27,7 @@ var playState = {
         }
 
         this.startTime = this.game.time.totalElapsedSeconds();
-        timer = game.add.text(15,15, "0:0", {font: '30px Arial', fill: '#ffffff'});
+        timer = game.add.bitmapText(15,15, 'font', '0:0' , 30);
 
         cursors = game.input.keyboard.createCursorKeys();
 
@@ -77,7 +77,7 @@ var playState = {
 
             milliseconds = Math.floor(secondsFraction * 10);
 
-            timer.setText(seconds + "." + milliseconds);
+            //timer.setText(seconds + "." + milliseconds);
     },
     Win: function() {
         game.state.start('win');

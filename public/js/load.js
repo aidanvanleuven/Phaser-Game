@@ -1,6 +1,7 @@
 var loadState = {
     preload: function () {
-        var loadingLabel = game.add.text(80, 150, 'Loading...', {font: '30px Arial', fill: '#ffffff'});
+        var loadingLabel = game.add.text(80, 150, 'Loading...', {font: '25px Arial', fill: '#ffffff'});
+        game.load.bitmapFont('font', 'assets/fonts/font.png', 'assets/fonts/font.fnt');
         game.load.image('sky', 'assets/sky.png');
         game.load.image('ground', 'assets/platform.png');
         game.load.image('star', 'assets/star.png');
