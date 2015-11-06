@@ -1,25 +1,31 @@
 var scoreArray = [];
 var scoreObject = {};
 var increment = 0;
+var time;
 
 function submit() {
     $("#submitButton").prop("disabled", true);
     if (scoreObject.seconds !== "" || scoreObject.minutes !== ""){
         scoreObject.name = $("#nameInput").val();
-        scoreArray.splice(0, increment, scoreObject);
         if (scoreObject.name === ""){
             scoreObject.name = "Default";
         }
-        increment++;
-        //$("#nameInput").val("");
+        scoreArray.splice(0, 0, scoreObject);
 
-        $.each(scoreArray, function(index,value){
-            $('.table tbody').append('<tr><td>' +value.name + '</td>' + '<td>' + value.seconds + "." + value.milliseconds + '</td><tr>');
-        });
+        populateTable();
     }
 }
 
 function winFunction(){
-    console.log("Working!");
+    scoreObject = {};
+    scoreObject.score = time;
     $("#submitButton").prop("disabled", false);
+}
+
+function populateTable(){
+    console.log(scoreArray);
+    $('.table tbody').empty();
+    $.each(scoreArray, function(index,value){
+        $('.table tbody').append('<tr><td>' + value.name + '</td>' + '<td>' + value.score + '</td><tr>');
+    });
 }

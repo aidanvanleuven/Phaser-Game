@@ -1,9 +1,10 @@
-var game = new Phaser.Game(800,600, Phaser.AUTO, 'gameDiv');
+var game = new Phaser.Game(800,600, Phaser.CANVAS, 'gameDiv');
 
 
 var score = 0;
 var scoreText;
 var timeout;
+var fps;
 var timer;
 var milliseconds = 0;
 var seconds = 0;

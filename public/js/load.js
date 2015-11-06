@@ -7,6 +7,7 @@ var loadState = {
         game.load.image('star', 'assets/star.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         game.load.image('button', 'assets/button.png');
+        game.time.advancedTiming = true;
     },
 
     create: function () {

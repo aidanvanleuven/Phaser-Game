@@ -1,11 +1,15 @@
 var playState = {
     create: function() {
         game.add.sprite(0,0, 'sky');
+
         platforms = game.add.group();
         platforms.enableBody = true;
+
         var ground = platforms.create(0, game.world.height - 64, 'ground');
         ground.scale.setTo(2,2);
         ground.body.immovable = true;
+        ground.body.checkCollision.down = false;
+
         var ledge = platforms.create(400, 400, 'ground');
         ledge.body.immovable = true;
         ledge = platforms.create(-150, 250, 'ground');
@@ -27,7 +31,8 @@ var playState = {
         }
 
         this.startTime = this.game.time.totalElapsedSeconds();
-        timer = game.add.bitmapText(15,15, 'font', '0:0' , 30);
+        timer = game.add.bitmapText(15,15, 'font', '0.0', 30);
+        fps = game.add.text(game.world.width - 100,15, "FPS:", {font: '25px Arial', fill: '#ffffff'});
 
         cursors = game.input.keyboard.createCursorKeys();
 
@@ -36,6 +41,8 @@ var playState = {
     },
 
     update: function() {
+        fps.text = "FPS: " + game.time.fps;
+
         game.physics.arcade.collide(player, platforms);
         game.physics.arcade.collide(stars,platforms, starBounce, null, this);
         game.physics.arcade.overlap(player, stars, collectStar, null, this);
@@ -49,6 +56,7 @@ var playState = {
         } else if (cursors.right.isDown) {
             player.body.velocity.x = 200;
             player.animations.play('right');
+
         } else {
             player.animations.stop();
             player.frame = 4;
@@ -77,7 +85,7 @@ var playState = {
 
             milliseconds = Math.floor(secondsFraction * 10);
 
-            //timer.setText(seconds + "." + milliseconds);
+            timer.text = seconds + "." + milliseconds;
     },
     Win: function() {
         game.state.start('win');

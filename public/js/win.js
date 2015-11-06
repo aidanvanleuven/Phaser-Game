@@ -7,8 +7,7 @@ var winState = {
 
         game.add.text(80, game.world.height-100, 'Enter: Submit Score', {font: '25px Arial', fill: '#ffffff'});
 
-        scoreObject.seconds = seconds;
-        scoreObject.milliseconds = milliseconds;
+        time = Number(seconds + "." + milliseconds);
         winFunction();
 
         space.onDown.addOnce(this.restart,this);
