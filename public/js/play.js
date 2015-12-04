@@ -1,18 +1,22 @@
 var playState = {
     create: function() {
+        game.world.setBounds(0,0,3200, 600);
+        game.time.events.loop(100, this.updateTimer, this);
+
         game.add.sprite(0,0, 'sky');
 
         platforms = game.add.group();
         platforms.enableBody = true;
 
         var ground = platforms.create(0, game.world.height - 64, 'ground');
-        ground.scale.setTo(2,2);
+        ground.scale.setTo(8,2);
         ground.body.immovable = true;
         ground.body.checkCollision.down = false;
 
-        var ledge = platforms.create(400, 400, 'ground');
+        var ledge = platforms.create(300, 400, 'ground');
         ledge.body.immovable = true;
-        ledge = platforms.create(-150, 250, 'ground');
+        ledge = platforms.create(750, 250, 'ground');
+        ledge.scale.setTo(0.9,1);
         ledge.body.immovable = true;
 
         player = game.add.sprite(32, game.world.height - 120, 'dude');
@@ -22,21 +26,26 @@ var playState = {
         player.body.collideWorldBounds = true;
         player.animations.add('left', [0,1,2,3], 10, true);
         player.animations.add('right', [5,6,7,8], 10, true);
+        game.camera.follow(player);
 
         stars = game.add.group();
         stars.enableBody = true;
-        for (var i = 0; i < 12; i ++){
-            var star = stars.create(i * 70, 200, 'star');
+        for (var i = 0; i < 10; i ++){
+            var star = stars.create(i * 100 + 150, 200, 'star');
+            star.body.gravity.y = 1000;
+            if (i >= 6)
+            star = stars.create(i * 100 + 200, 400, 'star');
             star.body.gravity.y = 1000;
         }
 
         this.startTime = this.game.time.totalElapsedSeconds();
         timer = game.add.bitmapText(15,15, 'font', '0.0', 30);
-        fps = game.add.text(game.world.width - 100,15, "FPS:", {font: '25px Arial', fill: '#ffffff'});
+        timer.fixedToCamera = true;
+        fps = game.add.text(700,15, "FPS:", {font: '25px Arial', fill: '#ffffff'});
+        fps.fixedToCamera = true;
 
         cursors = game.input.keyboard.createCursorKeys();
 
-        game.time.events.loop(100, this.updateTimer, this);
 
     },
 
@@ -69,11 +78,11 @@ var playState = {
         function collectStar (player, star){
             star.kill();
             score += 10;
-            if (score == 120) game.state.start('win');
+            if (score == 140) game.state.start('win');
         }
 
         function starBounce (star){
-            star.body.velocity.y = -400 - Math.random() * 200;
+            star.body.velocity.y = -300 - game.rnd.integerInRange(50,200);
         }
 
     },
